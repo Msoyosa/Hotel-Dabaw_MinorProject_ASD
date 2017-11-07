@@ -1,0 +1,20 @@
+body {
+font-family: arial;
+background-color: #333333;
+}
+img{
+	
+}
+div{
+background-color: #ffcccc;
+
+}
+h2 {
+color: black;
+
+p {
+color: black;}
+form{
+	vertical-align: bottom;
+	text-align: right;
+}
