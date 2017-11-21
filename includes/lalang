@@ -1,0 +1,50 @@
+                <td><?php  $$client_address = $row["client_address"];  echo $$client_address;?></td>
+
+                <td><?php  $payment_mode = $row["payment_mode"];  echo $payment_mode;?></td>
+                <td><?php  $adult_occupants = $row["adult_occupants"];  echo $adult_occupants;?></td>
+                <td><?php  $minor_occupants = $row["minor_occupants"];  echo $minor_occupants;?></td>
+
+                 <th scope="col">Address</th>
+                <th scope="col">Payment Mode</th>             
+
+                <th scope="col">Adult Occupants</th>
+                <th scope="col">Minor Occupants</th>
+
+
+
+              
+$client_number= $_GET["client_number"];
+  $sql = "SELECT * from client_info WHERE client_number = $client_number";
+
+     if($result = mysqli_query($link, $sql)){
+        if(mysqli_num_rows($result) > 0){     
+         while($row = mysqli_fetch_assoc($result)){ 
+
+    $client_fname   = $row['client_fname'];    
+    $client_lname   = $row['client_lname'];
+    $client_address  = $row['client_address'];
+    $client_contact_number = $row["contact_number"];
+    $client_email   = $row["email_address"];
+    $payment_mode      = $row["payment_mode"];
+    $check_in_date    =$row["check_in_date"];
+    $check_out_date      =$row["check_out_date"];
+    $selected_room_number     = $row["room_number"];     
+    $adult_occupants = $row["adult_occupants"];
+    $minor_occupants = $row["minor_occupants"];
+      $sql = "SELECT * from rooms WHERE room_number = $selected_room_number";
+
+     if($result2 = mysqli_query($link, $sql)){
+        if(mysqli_num_rows($result2) > 0){     
+         while($row = mysqli_fetch_assoc($result2)){ 
+            $sql = "UPDATE rooms set room_availability = 1 WHERE room_number = $selected_room_number";
+            $result3 = mysqli_query($link, $sql);
+        confirm_query($result3);
+
+         }
+     }
+ }
+
+        }
+    }
+}
+       $sql = "UPDATE client_info SET client_fname = '$client_fname', client_lname = '$client_lname', client_address = '$client_address', contact_number = '$client_contact_number', email_address = '$client_email', check_in_date = '$check_in_date',check_out_date = '$check_out_date',payment_mode = '$payment_mode', room_number = '$selected_room_number', adult_occupants = '$adult_occupants', minor_occupants = '$minor_occupants' where client_number = $client_number";
