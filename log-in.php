@@ -4,7 +4,13 @@
 include('config.php');
 
 ?>
+<style type="text/css">
+    .wrapper {
+        vertical-align: center;
+        width: 100%;
+    }
 
+</style>
 
 <?php
 if(!empty($_SESSION["username"]) && !empty($_SESSION["password"]) && !empty($_SESSION["id"])){
@@ -107,38 +113,67 @@ if(isset($_POST["submit"])){
      
     }
 
-   
-     
-     } 
-  
-?>
-
-    <div class="wrapper">
-
-        <h2>Login</h2>
+   /*
+   <h2>Login</h2>
         <p>Please fill in your credentials to login.</p>
         <form action="log-in.php" method="post">
             <div >
                 <label>Username:<sup>*</sup></label>
                 <input type="text" name="username"class="form-control" value="<?php echo $username; ?>">
-                <span class="help-block"><?php echo $username_err; ?></span>
-            </div>
-            <div>
-                <label>Password:<sup>*</sup></label>
-                <input type="password" name="password" class="form-control" value = "">
-                <span class="help-block"><?php echo $password_err; ?></span>
-            </div>
-            <div>
-                <input type="submit" name = "submit" value="Log in">
-                   <input type="submit" name = "reset" value = "Reset"/> 
-            </div>
+        <span class="help-block"><?php echo $username_err; ?></span>
+        </div>
+        <div>
+            <label>Password:<sup>*</sup></label>
+            <input type="password" name="password" class="form-control" value="">
+            <span class="help-block"><?php echo $password_err; ?></span>
+        </div>
+        <div>
+            <input type="submit" name="submit" value="Log in">
+            <input type="submit" name="reset" value="Reset" />
+        </div>
         </form>
-    </div>
-        <p>Don't have an account yet? <a href="register.php">Sign up now</a>.</p>
+        */ } ?>
+<center>
+        <div class="wrapper">
+            
+            <div class="card" style="width: 20rem; margin-top:90px;">
+                <div class="card-body">
+                    <form action="log-in.php" method="post">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Username</label>
+                            <input type="text" name="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" value="<?php echo $username; ?>"><span class="help-block"><?php echo $username_err; ?></span>
+                            
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password<sup>*</sup></label>
+                            <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" value=""><span class="help-block"><?php echo $password_err; ?></span>
+                        </div>
+                        <div class="form-check">
+                           
+                        </div>
+                        <input class="btn btn=primary" type="submit" name="submit" value="Log in">
+                        <input class="btn btn=primary" type="submit" name="reset" value="Reset" />
+                    </form>
+                </div>
+            </div>
 
-    <?php 
+
+
+        </div>
+    </center>
+    
+<center>   
+    <p>Don't have an account yet? <a href="register.php">Create Account</a>.</p>
+             <div id="index">
+            <a href="../public/index.php" target="_blank">
+                <p>Visit as a Customer</p>
+            </a>
+    </div>
+                 </center>   
+    
+        <?php 
+   
 //Dontats------------------------------------------------------------------------------------------------------------------------------
 
      }
-      ?>
-<?php  include("../includes/layouts/footer.php"); ?> 
+     

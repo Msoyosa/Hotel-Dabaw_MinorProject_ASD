@@ -1,17 +1,56 @@
-<!DOCTYPE>
-<?php
-session_start();
-?>
-<?php  include("../includes/layouts/header.php"); 
-include('config.php');
-?>
+<?php session_start(); ?>
+<?php  include("../includes/config.php"); ?>
 <?php require_once("../includes/functions.php"); ?> 
-<div id="page">
-        <h2>Update Reservation</h2>
-    </div
+<?php  include("../includes/layouts/header.php"); ?>
+<style type="text/css">
+    
+    #body { width: 100%; margin: 0 auto;} 
+#col1{
+    float: left; margin: 0; width: 100%;
+}
+#col2{
+    float: left; margin: 0; width: 100%;
 
-    <?php if(empty($_SESSION["username"]) && empty($_SESSION["password"]) && empty($_SESSION["id"])){
+}
+     ul {
+        list-style-type: none;
+        width: 111%;
+        padding: ;
+        overflow: hidden;
+        background-color: #333;
+    }
 
+    li {
+        float: left;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    li a:hover {
+        background-color: #111;
+    }
+    
+    form{
+        width:20%;
+        text-align: center;
+        margin-left: 50px;
+        
+    }
+    #room{
+        margin-left: 50px;
+    }
+</style>
+   <div id="page">
+        <h2>Manage Reservations</h2>       
+    </div>
+
+<?php if(empty($_SESSION["username"]) && empty($_SESSION["username"])){
         ?>
         <h1>You are not Logged in</h1>
         <h3> Already have an account?<a href="log-in.php">Log-in Here</a> or</h3>
@@ -20,21 +59,26 @@ include('config.php');
         }
         else {
 //Dontats------------------------------------------------------------------------------------------------------------------------------
-            
             ?>
-   <p> You are logged in, user <b><?php echo $_SESSION["username"];?> </b> <a href="profile.php?sessionID=<?php echo urlencode($_SESSION["id"]) ?>">[View Account Details]</a> </p>
-    <p><a href="log-out.php?sessionID=<?php echo urlencode($_SESSION["id"]) ?>">[Log out]</a> </p>
-   
+            <div dir="body"> 
+           
+ <?php print_navigation(); ?>
+  <center>
+ <div div="log" style="margin-left:40px;font-size: 15px;">
+            <p> You are logged in, user <b><?php echo $_SESSION["username"];?> </b> <a href="profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">[View Account Details]</a> </p>
+    <p><a href="log-out.php?sessionID=$_SESSION[id]">[Log out]</a> </p>
+    
+    </div>
  <?php
- print_navigation();
+           
   $confirm = "";
  global $link;
 
 $client_number = $_GET["client_number"];
 $adult_occupants = "";
 
-$client_fname = $client_lname= $client_address = $client_contact_number = $client_email = $payment_mode = $check_in_date = $check_out_date = $selected_room_number = $adult_occupants = ""; 
-$client_fname_err =$client_lname_err = $client_address_err = $client_contact_number_err = $client_email_err = $payment_mode_err = $check_in_date_err = $check_out_date_err = $selected_room_number_err = $adult_occupants_err = ""; 
+$client_fname = $client_lname= $client_address = $client_contact_number = $client_email  = $check_in_date = $check_out_date = $selected_room_number = $adult_occupants = ""; 
+$client_fname_err =$client_lname_err = $client_address_err = $client_contact_number_err = $client_email_err = $check_in_date_err = $check_out_date_err = $selected_room_number_err = $adult_occupants_err = ""; 
 
     $room_type = "";
     $adult_occupants = "";
@@ -54,7 +98,6 @@ global $link;
     $client_address  = $row['client_address'];
     $client_contact_number = $row["contact_number"];
     $client_email   = $row["email_address"];
-    $payment_mode      = $row["payment_mode"];
     $check_in_date    =$row["check_in_date"];
     $check_out_date      =$row["check_out_date"];
     $selected_room_number     = $row["room_number"];     
@@ -66,7 +109,6 @@ global $link;
     $old_client_address  = $client_address;
     $old_client_contact_number = $client_contact_number;
     $old_client_email   = $client_email ;
-    $old_payment_mode      =$payment_mode;
     $old_check_in_date    =$check_in_date;
     $old_check_out_date      = $check_out_date ;
     $old_selected_room_number     = $selected_room_number;     
@@ -80,8 +122,8 @@ global $link;
 
  if (isset($_POST["reset"])) {
 
-$client_fname = $client_lname= $client_address = $client_contact_number = $client_email = $payment_mode = $check_in_date = $check_out_date = $adult_occupants = ""; 
-$client_fname_err =$client_lname_err = $client_address_err = $client_contact_number_err = $client_email_err = $payment_mode_err = $check_in_date_err = $check_out_date_err = $selected_room_number_err = $adult_occupants_err = ""; 
+$client_fname = $client_lname= $client_address = $client_contact_number = $client_email = $check_in_date = $check_out_date = $adult_occupants = ""; 
+$client_fname_err =$client_lname_err = $client_address_err = $client_contact_number_err = $client_email_err  = $check_in_date_err = $check_out_date_err = $selected_room_number_err = $adult_occupants_err = ""; 
 
 
 }
@@ -118,12 +160,7 @@ if(isset($_POST['submit'])){
     else{
         $client_email = trim($_POST['client_email']);
     }
-    if(empty(trim($_POST['payment_mode']))){
-        $payment_mode_err = "Please select a payment scheme.";
-    }
-    else{
-        $payment_mode = trim($_POST['payment_mode']);
-    }
+    
     if(empty(trim($_POST['check_in_date']))){
         $check_in_date_err = "Please select a check-in date.";
     }
@@ -179,13 +216,12 @@ if(isset($_POST['submit'])){
     }
     
                                                                                                                                                         
-   if(empty( $client_fname_err) && empty( $client_lname_err)&& empty($client_address_err) && empty( $client_contact_number_err) && empty( $client_email_err) && empty($payment_mode_err) && empty($check_in_date_err) && empty( $check_out_date_err) && empty( $adult_occupants_err)){  
+   if(empty( $client_fname_err) && empty( $client_lname_err)&& empty($client_address_err) && empty( $client_contact_number_err) && empty( $client_email_err)  && empty($check_in_date_err) && empty( $check_out_date_err) && empty( $adult_occupants_err)){  
     
     if ($old_client_fname   == $_POST['client_fname'] && $old_client_lname   == $_POST['client_lname'] &&  $old_client_address  == $_POST['client_address'] &&  
-        $old_client_contact_number == $_POST["client_contact_number"] &&  $old_client_email   == $_POST["client_email"] &&   $old_payment_mode  == $_POST["payment_mode"] 
-        &&  $old_check_in_date    ==$_POST["check_in_date"] &&  $old_check_out_date      ==$_POST["check_out_date"] && $old_selected_room_number     == $_POST["selected_room_number"] 
+        $old_client_contact_number == $_POST["client_contact_number"] &&  $old_client_email   == $_POST["client_email"]  &&  $old_check_in_date    ==$_POST["check_in_date"] &&  $old_check_out_date      ==$_POST["check_out_date"] && $old_selected_room_number     == $_POST["selected_room_number"] 
         && $old_adult_occupants == $_POST["adult_occupants"] && $old_minor_occupants == $_POST["minor_occupants"]) {
-         $confirm = "No changes has been made.";
+         $confirm = "No changes has been made to number";
 
 
     }
@@ -196,18 +232,17 @@ if(isset($_POST['submit'])){
     $client_address  = $_POST['client_address'];
     $client_contact_number = $_POST["client_contact_number"];
     $client_email   = $_POST["client_email"];
-    $payment_mode      = $_POST["payment_mode"];
     $check_in_date    =$_POST["check_in_date"];
     $check_out_date      =$_POST["check_out_date"];
     $selected_room_number     = $_POST["selected_room_number"];     
     $adult_occupants = $_POST["adult_occupants"];
     $minor_occupants = $_POST["minor_occupants"];
 
-        $sql = "UPDATE client_info SET client_fname = '$client_fname', client_lname = '$client_lname', client_address = '$client_address', contact_number = '$client_contact_number', email_address = '$client_email', check_in_date = '$check_in_date',check_out_date = '$check_out_date',payment_mode = '$payment_mode', room_number = '$selected_room_number', adult_occupants = '$adult_occupants', minor_occupants = '$minor_occupants' where client_number = $client_number";
+        $sql = "UPDATE client_info SET client_fname = '$client_fname', client_lname = '$client_lname', client_address = '$client_address', contact_number = '$client_contact_number', email_address = '$client_email', check_in_date = '$check_in_date',check_out_date = '$check_out_date', room_number = '$selected_room_number', adult_occupants = '$adult_occupants', minor_occupants = '$minor_occupants' where client_number = $client_number";
 
         $result = mysqli_query($link, $sql);
         confirm_query($result);
-        $confirm = "You successfully updated room number ";
+        $confirm = "You successfully updated client number ";
     //header("location: update_reservation.php?client_number=$client_number");
 
     }
@@ -217,7 +252,7 @@ if(isset($_POST['submit'])){
 echo $confirm;
  if (empty($confirm)) {
     ?>
-
+<div id="form">
     <form action = 'update_reservation.php?client_number=<?php echo urlencode($client_number);?>' method='post'>
           <h3><?php echo $_GET["client_number"]; ?></h3>
 
@@ -278,7 +313,7 @@ echo $confirm;
                     <a href="manage_reservations.php?sessionID=<?php echo urlencode($_SESSION["id"]) ?>" class="btn btn-default">Cancel</a>
 
         </form>
-    <div>
+    <div id="room"> 
 
                 <h3>This room is reserved on these dates:<h3> 
                 <table>
@@ -306,6 +341,7 @@ echo $confirm;
                      ?>
                        </table>
                 </div>
+                    </div>
     <?php
   }
   else{
@@ -317,7 +353,7 @@ echo $confirm;
         <th>Updated</th>
         <tr>
             <td>Name:</td> 
-            <td><?php echo $old_client_fname. " ".  $old_client_lname?></td>
+            <td s><?php echo $old_client_fname. " ".  $old_client_lname?></td>
             <td><?php echo $client_fname. " ".  $client_lname?></td>
         </tr>
         <tr>
@@ -334,11 +370,6 @@ echo $confirm;
             <td>Email Address:</td> 
             <td><?php echo$old_client_email;?></td>
             <td><?php echo$client_email;?></td>
-        </tr>
-        <tr>
-            <td>Payment Mode:</td> 
-            <td><?php echo $old_payment_mode;?></td>
-            <td><?php echo $payment_mode;?></td>
         </tr>
         <tr>
             <td>Check-in date and check-out dates:</td> 

@@ -5,7 +5,35 @@ session_start();
 <?php  include("../includes/layouts/header.php"); ?>
 <?php require_once("../includes/functions.php"); ?> 
 <?php  include("../includes/config.php"); ?>
+<style type="text/css">
+	 #body { width: 100%; margin: 0 auto;} 
+#col1, #col2{
+	float: right; margin: 0; width: 100%;
+}ul {
+        list-style-type: none;
+        width: 111%;
+        padding: ;
+        overflow: hidden;
+        background-color: #333;
+    }
 
+    li {
+        float: left;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    li a:hover {
+        background-color: #111;
+    }
+
+</style>
 
 	<?php if(empty($_SESSION["username"]) && empty($_SESSION["password"]) && empty($_SESSION["id"])){
 
@@ -35,16 +63,26 @@ session_start();
           		}
       		} 
              ?>
-<h3> Hello, user <b><?php echo $_SESSION["lname"]. ", ".$_SESSION["fname"] ?></b> <?php echo  "(".$_SESSION["username"]. ") "; ?> </h3><br />
+             <div id="body">
+             <div id="col2"> 	      
+</div>
+             <div id="col1"> 
+
+
+
+<?php print_navigation(); ?>
+                 <center>
+                 <h3> Hello, user <b><?php echo $_SESSION["lname"]. ", ".$_SESSION["fname"] ?></b> <?php echo  "(".$_SESSION["username"]. ") "; ?> </h3><br />
  <h3>Your id is <b><?php echo $_SESSION["id"] ?></b></h3>
 <div float = "right"> 
 	<a href="log-out.php?sessionID=$_SESSION[id]">[Log out]</a>
 	<a href="edit_profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">[Edit your profile] <hr /> <hr /> </a> </div>
+	<hr/>
+                     </center>
+</div>
 
-<?php print_navigation(); ?>
-
+</div>
 <?php
 //Dontats------------------------------------------------------------------------------------------------------------------------------
 			}
 			?>
-<?php  include("../includes/layouts/footer.php"); ?> 

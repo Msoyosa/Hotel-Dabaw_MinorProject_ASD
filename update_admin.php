@@ -1,17 +1,23 @@
-<!DOCTYPE>
-<?php
-session_start();
-?>
-<?php  include("../includes/layouts/header.php"); 
-include('config.php');
-?>
+<?php session_start(); ?>
+<?php  include("../includes/config.php"); ?>
 <?php require_once("../includes/functions.php"); ?> 
-<div id="page">
-        <h2>Update Reservation</h2>
-    </div
+<?php  include("../includes/layouts/header.php"); ?>
+<style type="text/css">
+    
+    #body { width: 100%; margin: 0 auto;} 
+#col1{
+    float: left; margin: 0; width: 75%;
+}
+#col2{
+    float: left; margin: 0; width: 25%;
 
-    <?php if(empty($_SESSION["username"]) && empty($_SESSION["password"]) && empty($_SESSION["id"])){
+}
+</style>
+   <div id="page">
+        <h2>Manage Admins</h2>       
+    </div>
 
+<?php if(empty($_SESSION["username"]) && empty($_SESSION["username"])){
         ?>
         <h1>You are not Logged in</h1>
         <h3> Already have an account?<a href="log-in.php">Log-in Here</a> or</h3>
@@ -20,13 +26,19 @@ include('config.php');
         }
         else {
 //Dontats------------------------------------------------------------------------------------------------------------------------------
-            
             ?>
-   <p> You are logged in, user <b><?php echo $_SESSION["username"];?> </b> <a href="profile.php?sessionID=<?php echo urlencode($_SESSION["id"]) ?>">[View Account Details]</a> </p>
-    <p><a href="log-out.php?sessionID=<?php echo urlencode($_SESSION["id"]) ?>">[Log out]</a> </p>
-   
+            <div dir="body"> 
+            <div id="col1">
+        <p> You are logged in, user <b><?php echo $_SESSION["username"];?> </b> <a href="profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">[View Account Details]</a> </p>
+    <p><a href="log-out.php?sessionID=$_SESSION[id]">[Log out]</a> </p>
+    <hr/>
+    </div>
+    <div id="col2">
+ <?php print_navigation(); ?>
+ </div>
+ </div>
+   <hr/>
  <?php
- print_navigation();
   $message = "";
  global $link;
 
@@ -101,7 +113,7 @@ elseif(isset($_POST['submit'])){
                         }
            }
 
-    if(empty(trim($_POST["admin_username"]))){
+if(empty(trim($_POST["admin_username"]))){
         $admin_username_err = "Please enter admin's username.";
     } 
     else{
@@ -135,10 +147,30 @@ elseif(isset($_POST['submit'])){
       if (trim($_POST["admin_password"]) != trim($_POST["confirm_password"])) {
         $admin_password_err = "Passwords are not matched";
       }
-      elseif (trim($_POST["admin_password"]) == trim($_POST["confirm_password"])) {
-          if((strlen(trim($_POST["admin_password"]))) < 6 ){ 
+      if (trim($_POST["admin_password"]) == trim($_POST["confirm_password"])) {
+        
+        if(strlen(trim($_POST["admin_password"])) <= 5 ){ 
          $admin_password_err = "Passwords must be at least 6 characters long";
+          $admin_password = "";
+        $confirm_password = "";
         }
+         if (!preg_match("/[0-9]+/", trim($_POST["admin_password"]))) {
+        $admin_password_err = "Password must contain a number";
+        $admin_password = "";
+        $confirm_password = "";
+    }
+    
+    if (preg_match("/$fname+ /", trim($_POST["admin_password"])) || preg_match("/$fname+/", trim($_POST["admin_password"]))) {
+        $admin_password_err = "Password must not contain admin's name";
+        $admin_password = "";
+        $confirm_password = "";
+    }
+    if (preg_match("/$lname+/", trim($_POST["admin_password"])) || preg_match("/$lname+/", trim($_POST["admin_password"]))) {
+        $admin_password_err = "Password must not contain admin's name";
+        $admin_password = "";
+        $confirm_password = "";
+    }
+
 
         if(empty($fname_err)&& empty($lname_err)&& empty($mname_err)&& empty($admin_username_err)&& empty($admin_password_err)&&empty($confirm_password_err)){
           $admin_password= trim($_POST["admin_password"]);

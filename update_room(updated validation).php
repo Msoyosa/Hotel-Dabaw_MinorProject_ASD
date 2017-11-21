@@ -23,34 +23,6 @@ width: 100%; margin: 0 auto;
         float: left; margin: 0; width: 40%;
 
 }
-    ul {
-        list-style-type: none;
-        width: 111%;
-        padding: ;
-        overflow: hidden;
-        background-color: #333;
-    }
-
-    li {
-        float: left;
-    }
-
-    li a {
-        display: block;
-        color: white;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-    }
-
-    li a:hover {
-        background-color: #111;
-    }
-    
-    #form{
-        margin-left: 90px;
-    }
-   
 </style>
    <div id="page">
         <h2>Manage Rooms</h2>       
@@ -67,17 +39,16 @@ width: 100%; margin: 0 auto;
 //Dontats------------------------------------------------------------------------------------------------------------------------------
             ?>
             <div dir="body"> 
-           
-        
-    
- <?php print_navigation(); ?>
-<center>
- <div div="log" style="margin-left:40px;font-size: 15px;">
-<p> You are logged in, user <b><?php echo $_SESSION["username"];?> </b> <a href="profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">[View Account Details]</a> </p>
+            <div id="col1">
+        <p> You are logged in, user <b><?php echo $_SESSION["username"];?> </b> <a href="profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">[View Account Details]</a> </p>
     <p><a href="log-out.php?sessionID=$_SESSION[id]">[Log out]</a> </p>
-    
+    <hr/>
     </div>
-</center>
+    <div id="col2">
+ <?php print_navigation(); ?>
+ </div>
+ </div>
+
 <?php  
 $message = "";
 $room_number_err = $room_type_err = $room_rate_err ="";
@@ -128,21 +99,20 @@ if(isset($_POST["submit"])){
 		$room_rate =$_POST["room_rate"];
 	}
 
-
-  if(empty($room_rate_err)  && empty($room_type_err)){
-    if (isset($_FILES["image"])) {
-      $image_info = $_FILES["image"] ;
+	if(empty($room_rate_err)  && empty($room_type_err)){
+		if (isset($_FILES["image"])) {
+			$image_info = $_FILES["image"] ;
             if (!empty($_FILES["name"])) {
                
             
-      $image_info['name'] = $selected_room_number.".jpg";
-      //print_r($image_info);
-      if($image_info['error'] > 0){
-        die('An error ocurred when uploading.');
-      }
-      if($image_info["type"] != "image/jpeg"){
-        die('Unsupported filetype uploaded.');
-      }
+			$image_info['name'] = $selected_room_number.".jpg";
+			//print_r($image_info);
+			if($image_info['error'] > 0){
+    		die('An error ocurred when uploading.');
+			}
+			if($image_info["type"] != "image/jpeg"){
+    		die('Unsupported filetype uploaded.');
+			}
 
  //rename($image, "/home/user/login/docs/my_file.txt");
 
@@ -165,7 +135,8 @@ switch ($room_type) {
         break;
 }
 }
-}  $sql = "SELECT * FROM rooms where room_number = '$selected_room_number'";
+}
+     $sql = "SELECT * FROM rooms where room_number = '$selected_room_number'";
                            if($result = mysqli_query($link, $sql)){
                             if(mysqli_num_rows($result) > 0){
                              while($row = mysqli_fetch_assoc($result)){
@@ -184,7 +155,6 @@ switch ($room_type) {
 		$room_number =$_GET["room_number"];
 		$room_type =$_POST["room_type"];
 		$room_rate =$_POST["room_rate"];
-		//echo $room_number ."  .  " . $room_type . "  .  " .$old_room_number;
 		$sql = "UPDATE rooms set ";
 		$sql .= "room_type = '{$room_type}', "; 
 		$sql .= "room_rate = '{$room_rate}' ";
@@ -200,17 +170,17 @@ switch ($room_type) {
                         }
 
                     }
-   			$message = "Successfully updated room number" .": ".$room_number. "The changes in the photo will only apply when you close the browser";
+   			$message = "Successfully updated room number" .": ".$room_number. ".The changes in the photo will only apply when you close the browser";
    	                  //  mysql_close($link);
 
 		}
 		
    		//	header("location: manage_rooms.php?sessionID=$_SESSION[id]");
 
-
+	}
 
  
-}
+
 
 ?>
 <div id="main">
@@ -225,7 +195,7 @@ if (empty($message)) {
  ?>
 <div id="info">
 <div>
-    <div id="form">
+
 	<form action = "update_room.php?room_number=<?php echo urlencode($room_number);?>" method = "post" enctype="multipart/form-data">
 	
         <div>
@@ -263,7 +233,6 @@ if (empty($message)) {
         </div>
 
 	</form>
-        </div>
 </div>
 </div>
 </div>
@@ -280,4 +249,5 @@ elseif (!empty($message)){
 //Dontats------------------------------------------------------------------------------------------------------------------------------
 			}
 			?>
+<?php  include("../includes/layouts/footer.php"); ?> 
 

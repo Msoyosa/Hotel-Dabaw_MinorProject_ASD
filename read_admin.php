@@ -2,27 +2,43 @@
 <?php  include("../includes/config.php"); ?>
 <?php require_once("../includes/functions.php"); ?> 
 <?php  include("../includes/layouts/header.php"); ?>
-<link rel="stylesheet" href="css/uikit.min.css">
-<script src = "js/uikit.min.js"></script>
-<div id="page">
-        <h2>View Admin</h2>
-    </div
+<style type="text/css">
+    
+    #body { width: 100%; margin: 0 auto;} 
+#col1{
+    float: left; margin: 0; width: 75%;
+}
+#col2{
+    float: left; margin: 0; width: 25%;
 
-<?php if(empty($_SESSION["username"]) && empty($_SESSION["username"]) && empty($_SESSION["id"])){
-		?>
-		<h1>You are not Logged in</h1>
-		<h3> Already have an account?<a href="log-in.php">Log-in Here</a> or</h3>
-		<h3><a href="register.php">Create an account</a> </h3>
-		<?php
-		}
-		else {
+}
+</style>
+   <div id="page">
+        <h2>Manage Admins</h2>       
+    </div>
+
+<?php if(empty($_SESSION["username"]) && empty($_SESSION["username"])){
+        ?>
+        <h1>You are not Logged in</h1>
+        <h3> Already have an account?<a href="log-in.php">Log-in Here</a> or</h3>
+        <h3><a href="register.php">Create an account</a> </h3>
+        <?php
+        }
+        else {
 //Dontats------------------------------------------------------------------------------------------------------------------------------
-			?>
-	<p> You are logged in, user <b><?php echo $_SESSION["username"];?> </b> <a href="profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">[View Account Details]</a> </p>
-	<p><a href="log-out.php?sessionID=$_SESSION[id]">[Log out]</a> </p>
-
+            ?>
+            <div dir="body"> 
+            <div id="col1">
+        <p> You are logged in, user <b><?php echo $_SESSION["username"];?> </b> <a href="profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">[View Account Details]</a> </p>
+    <p><a href="log-out.php?sessionID=$_SESSION[id]">[Log out]</a> </p>
+    <hr/>
+    </div>
+    <div id="col2">
+ <?php print_navigation(); ?>
+ </div>
+ </div>
+<hr/>
 <?php 
- print_navigation();
 $fname   =  $lname   =$mname   =$username= $admin_id ="";
 if(isset($_GET["adminID"])){
     $adminID = $_GET["adminID"];

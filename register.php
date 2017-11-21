@@ -4,7 +4,7 @@
 include('config.php');
 
 ?>
-<?php require_once("../includes/functions.php"); ?> 
+<?php require_once("../includes/functions.php"); ?>
 
 
 <?php
@@ -16,8 +16,8 @@ else{
 //Dontats------------------------------------------------------------------------------------------------------------------------------
             ?>
 
- <?php //print_navigation(); ?>
-<?php 
+    <?php //print_navigation(); ?>
+    <?php 
 $admin_id = $admin_username = $admin_password = $fname = $lname = $mname=$confirm_password= "";
 
 $admin_id_err = $admin_username_err = $admin_password_err = $fname_err = $lname_err = $mname_err= $confirm_password_err="";
@@ -59,6 +59,9 @@ if(isset($_POST['submit'])){
    if(empty(trim($_POST["admin_username"]))){
         $admin_username_err = "Please enter admin's username.";
     } 
+    if(strlen(trim($_POST["admin_username"])) < 8 ){
+        $admin_username_err = "Username must be more than 8 characters long.";
+    } 
     else{
         $admin_username = trim($_POST["admin_username"]);    
     }
@@ -68,28 +71,47 @@ if(isset($_POST['submit'])){
     else{
         $admin_id = trim($_POST['admin_id']);
     }
-    if(empty(trim($_POST['admin_password']))){
-        $admin_password_err = "Please enter admin's password.";
-    }
-    else{
-        if(trim($admin_password) != trim($confirm_password)){
-        $admin_password_err = "Passwords do not match";
-        $admin_password = "";
-        $confirm_password = "";
-    }
-    else{
-        if(strlen(trim($_POST['admin_password'])) <6){
+     if(strlen(trim($_POST['admin_password'])) <6){
         $admin_password_err = "Password must be at least 6 characters";
         $admin_password = "";
         $confirm_password = "";
     }
+    if(empty(trim($_POST['admin_password']))){
+        $admin_password_err = "Please enter admin's password.";
+    }
+
+    else{
+        
+    if (!preg_match("/[0-9]+/", trim($_POST["admin_password"]))) {
+        $admin_password_err = "Password must contain a number";
+        $admin_password = "";
+        $confirm_password = "";
+    }
+    
+    if (preg_match("/$fname+ /", trim($_POST["admin_password"])) || preg_match("/$fname+/", trim($_POST["admin_password"]))) {
+        $admin_password_err = "Password must not contain your name";
+        $admin_password = "";
+        $confirm_password = "";
+    }
+    if (preg_match("/$lname+/", trim($_POST["admin_password"])) || preg_match("/$lname+/", trim($_POST["admin_password"]))) {
+        $admin_password_err = "Password must not contain your name";
+        $admin_password = "";
+        $confirm_password = "";
+    }
+    if(trim($_POST["admin_password"]) != trim($_POST["confirm_password"])){
+        $admin_password_err = "Passwords do not match";
+        $admin_password = "";
+        $confirm_password = "";
+    }
+  
+    
     else{
         $admin_password = trim($_POST['admin_password']);
 
         $confirm_password = trim($_POST['confirm_password']);
     }
     }
-    }
+   
 
     if(empty(trim($_POST['confirm_password']))){
         $confirm_password_err = "Please confirm admin's password.";
@@ -103,6 +125,7 @@ if(isset($_POST['submit'])){
                 $admin_password_err = "Passwords do not match";
 
     }
+
 
 
     
@@ -150,6 +173,7 @@ if(isset($_POST['submit'])){
                         $result = mysqli_query($link, $sql);
                         $checking = admin_confirm_query($result);
                         if($checking ==1){
+                        	                            $_SESSION["id"] = $id["id"];
                             $message = "Successfully created admin ".$admin_username. " the account for ". $lname .", ". $fname. ".<br/>Go to <a href = 'admin.php?sessionID=$_SESSION[id]'> Admin Homepage</a>";
                             $_SESSION["username"] = $admin_username;
                             $_SESSION["password"] = $admin_password;
@@ -186,60 +210,64 @@ if(isset($_POST['submit'])){
 }
 
  ?>
-
- <form action = 'register.php' method='post'>
+    <div class="card" style="width: 20rem; margin-left: 500px;">
+        <div class="card-body">
           
+<form action = 'register.php' method='post'>
+                
+                    <div>
+                        <label>First Name</label>
+                        <input name="fname" type="text" name="fname" class="form-control" value="<?php echo $fname; ?>">
+                        <span class="help-block"><?php echo $fname_err; ?></span>
 
-                        <div >
-                            <label>First Name</label>
-                            <input type="text" name="fname" class="form-control" value="<?php echo $fname; ?>">
-                            <span class="help-block"><?php echo $fname_err; ?></span>
+                    </div>
+                    <div>
+                        <label>Last Name</label>
+                        <input name="lname" type="text" class="form-control" value="<?php echo $lname; ?>">
+                        <span class="help-block"><?php echo $lname_err; ?></span>
 
-                        </div>
-                        <div >
-                            <label>Last Name</label>
-                            <input type="text" name="lname" class="form-control" value="<?php echo $lname; ?>">
-                            <span class="help-block"><?php echo $lname_err; ?></span>
+                    </div>
+                    <div>
+                        <label>Middle Name</label>
+                        <input name="mname" type="text" class="form-control" value="<?php echo $mname; ?>">
+                        <span class="help-block"><?php echo $mname_err; ?></span>
 
-                        </div>
-                         <div >
-                            <label>Middle Name</label>
-                            <input type="text" name="mname" class="form-control" value="<?php echo $mname; ?>">
-                            <span class="help-block"><?php echo $mname_err; ?></span>
-
-                        </div>
-                        <div>
-                            <label>Username</label>
-                             <input type='text' name="admin_username" value="<?php echo $admin_username; ?>">
-                              <span class="help-block"><?php echo $admin_username_err; ?></span>
-                        </div>
-                        <div>
-                            <label>Admin ID</label>
-                            <input type='text' name="admin_id" value="<?php echo $admin_id; ?>">
-                             <span class="help-block"><?php echo $admin_id_err
+                    </div>
+                    <div>
+                        <label>Username</label><br>
+                        <input name="admin_username" type='text' class='form-control'value="<?php echo $admin_username; ?>">
+                        <span class="help-block"><?php echo $admin_username_err; ?></span>
+                    </div>
+                    <div>
+                        <label>Admin ID</label><br>
+                        <input name="admin_id" type='text'class='form-control' value="<?php echo $admin_id; ?>">
+                        <span class="help-block"><?php echo $admin_id_err
 ; ?></span>
-                        </div>
-                        <div>
-                            <label>Password</label>
-                            <input type='password' name="admin_password" value="<?php echo $admin_password; ?>">
-                             <span class="help-block"><?php echo   $admin_password_err; ?></span>
-                        </div>
+                    </div>
+                    <div>
+                        <label>Password</label><br>
+                        <input name="admin_password" type='password' class='form-control'value="<?php echo $admin_password; ?>">
+                        <span class="help-block"><?php echo   $admin_password_err; ?></span>
+                    </div>
 
-                        <div>
-                            <label>Confirm Password</label>
-                            <input type='password' name="confirm_password" class='form-control' value="<?php echo $confirm_password; ?>">
-                             <span class="help-block"><?php echo $confirm_password_err; ?></span>
-                        </div>                 
-                       
-
-                        </div>
-                   <input type='submit' name = 'submit' value='Create Admin' /> 
-                   <input type="submit" name = "reset" value = "Reset"/> 
+                    <div>
+                        <label>Confirm Password</label><br>
+                        <input name="confirm_password" type='password' class='form-control' value="<?php echo $confirm_password; ?>">
+                        <span class="help-block"><?php echo $confirm_password_err; ?></span>
+                    </div>
+<br>
+<input class="btn btn-primary" type='submit' name='submit' value='Create Admin' />
+        <input class="btn btn-primary" type="submit" name="reset" value="Reset" />
+        <a href="register.php">Cancel</a>
+        
         </form>
-                <p>Already have an account? <a href="log-in.php">Log-in now</a>.</p>
-
-<?php
+    </div>
+</div>
+      <center>  
+        <p style="margin-left: 140px;">Already have an account? <a href="log-in.php">Log-in now</a>.</p>
+</center>
+        <?php
 //Dontats------------------------------------------------------------------------------------------------------------------------------
             }
             ?>
-<?php  include("../includes/layouts/footer.php"); ?> 
+            <?php  include("../includes/layouts/footer.php"); ?>

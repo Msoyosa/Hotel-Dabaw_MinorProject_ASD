@@ -1,18 +1,40 @@
 <?php  include("../includes/layouts/public_header.php"); ?>
-   <div id="page">
+  <style type="text/css"> 
+  body { width: 100%; margin: 0 auto;} 
+#image, #form, #table {float: left; margin: 10px;} 
+h3{
+    color: black;
+}
+th, td{
+text-align: center;
+color: black;
+}
+form{
+    width: 400px;
+    margin-left: 10px;
+        background-color: #cccccc;
+}
+
+table{
+    font-size: 20px;
+}
+#reserved_dates{
+    width: 100%;
+    text-align: left;
+    vertical-align: center;
+}
+#image_container{
+    width: 700px;
+background-image: url("Images/BG/room_background.jpg");
+background-position: center;
+    background-attachment: fixed; opacity: 50%;
+}
+
+  </style>
+   <div>
     <h2>Reservation</h2>
     </div>
 
-    <div id="navigation" align="left">
-    <ul>
-    <li><a href="about_hotelDabaw.php"> About Hotel Dabaw </a></li>
-    <li><a href="contact.php"> Contact Us </a></li>
-    <li><a href="terms_of_service.php"> Terms of Service </a></li>
-    <li><a href="privacy_policy.php"> Privacy Policy </a> </li>
-    <li><a href="room_selection.php">Select Rooms</a></li>
-    </ul>
-    </div>
-<div id="content">
 <?php 
 include('config.php');
 require_once("../includes/functions.php");
@@ -36,8 +58,14 @@ if(isset($_COOKIE["client_fname"]) ||isset($_COOKIE["client_lname"]) || isset($_
     $client_contact_number = $_COOKIE["client_contact_number"];
     $client_email   = $_COOKIE["client_email"];
     $payment_mode      = $_COOKIE["payment_mode"];
-    $check_in_date    =$_COOKIE["check_in_date"];
-    $check_out_date      = $_COOKIE["check_out_date"];
+    if(empty($_COOKIE["check_in_date"]) || empty($_COOKIE["check_out_date"])){
+        $check_in_date = date("d/m/Y");
+        $check_out_date = date("d/m/Y");
+    }
+    else{
+         $check_in_date =$_COOKIE["check_in_date"];
+        $check_out_date = $_COOKIE["check_out_date"];
+    }
     $selected_room_number     = $_GET["room_number"]; 
 }
 if(!isset($_POST['submit'])){
@@ -72,13 +100,16 @@ if(isset($_POST['submit'])){
         $client_address = trim($_POST['client_address']); 
     }
     if(empty(trim($_POST['client_contact_number']))){
-        $client_contact_number_err = "Please enter your complete address.";
+        $client_contact_number_err = "Please enter your contact number.";
     }
     else{
         $client_contact_number = trim($_POST['client_contact_number']);
     }
     if(empty(trim($_POST['client_email']))){
         $client_email_err = "Please enter your email.";
+    }
+    if (!preg_match("/^.+@.+\.com$/", trim($_POST['client_email']))) {
+        $client_email_err = "Please enter a valid email address.";
     }
     else{
         $client_email = trim($_POST['client_email']);
@@ -92,11 +123,18 @@ if(isset($_POST['submit'])){
     if(empty(trim($_POST['check_in_date']))){
         $check_in_date_err = "Please select a check-in date.";
     }
+    if(strtotime($check_in_date) <= strtotime(date("d/m/Y"))){
+        $check_in_date_err = "Check-in date must not be later than today.";
+    }
     else{
         $check_in_date = trim($_POST['check_in_date']);   
     }
+
     if(empty(trim($_POST['check_out_date']))){
         $check_out_date_err = "Please select a check-out date.";
+    }
+    if(strtotime($check_out_date) <= strtotime(date("d/m/Y"))){
+        $check_out_date_err = "Check-out date must not be later than today.";
     }
     else{
         $check_out_date = trim($_POST['check_out_date']);   
@@ -242,97 +280,129 @@ header("location: payment.php?room_number=$selected_room_number");
                         }
                     }
  ?> 
-<div>
-    <img src="<?php echo $image_link; ?>" width =50%>
-</div>
 
- <form action = 'reservation_form_processing.php?room_number=<?php echo ($selected_room_number);?>' method='post'>
+<div uk-grid>
+
+ <form action = 'reservation_form_processing.php?room_number=<?php echo ($selected_room_number);?>' method='post'  >
           
-
+                   
                         <div >
-                            <label>First Name</label>
-                            <input type="text" name="client_fname" class="form-control" value="<?php echo $client_fname; ?>">
-                            <span class="help-block"><?php echo $client_fname_err; ?></span>
+                            <label class="title" >First Name</label>
+                            <input type="text" name="client_fname"class="uk-input" value="<?php echo $client_fname; ?>">
+                            <span class="help-block"><?php echo $client_fname_err; ?></span><br/>
 
                         </div>
                         <div >
-                            <label>Last Name</label>
-                            <input type="text" name="client_lname" class="form-control" value="<?php echo $client_lname; ?>">
-                            <span class="help-block"><?php echo $client_lname_err; ?></span>
+                            <label class="title">Last Name</label>
+                            <input type="text" name="client_lname" class="uk-input" value="<?php echo $client_lname; ?>">
+                            <span class="help-block"><?php echo $client_lname_err; ?></span><br/>
 
                         </div>
+                        
+
                         <div>
-                            <label>Address</label>
-                             <input type='text' name="client_address" value="<?php echo $client_address; ?>">
-                              <span class="help-block"><?php echo $client_address_err; ?></span>
+                            <label class="title">Address</label>
+                             <input type='text' name="client_address" class="uk-input" value="<?php echo $client_address; ?>">
+                              <span class="help-block"><?php echo $client_address_err; ?></span><br/>
                         </div>
+
+                        <div>
+                            <label class="title">E-mail</label>
+                            <input type='text' name="client_email" class="uk-input" value="<?php echo $client_email; ?>">
+                             <span class="help-block"><?php echo   $client_email_err; ?></span><br/>
+                        </div>
+
                         <div>
                             <label>Contact Number</label>
-                            <input type='text' name="client_contact_number" value="<?php echo $client_contact_number; ?>">
+                            <input type='text' name="client_contact_number" class="uk-input" value="<?php echo $client_contact_number; ?>">
                              <span class="help-block"><?php echo $client_contact_number_err
-; ?></span>
-                        </div>
-                        <div>
-                            <label>E-mail</label>
-                            <input type='text' name="client_email" value="<?php echo $client_email; ?>">
-                             <span class="help-block"><?php echo   $client_email_err; ?></span>
+; ?></span><br/>
                         </div>
 
                         <div>
-                            <label>Payment mode</label>
-                            <select name="payment_mode">
+                            <label class="title">Payment mode</label>
+                            <select name="payment_mode" class="uk-select">
                             <option value="1">PayMaya</option>
                             <option value="2">Paypal</option>
                             <option value="3">Credit Card</option>
                             <option value="4">Bank</option>
                             </select>
-                             <span class="help-block"><?php echo $payment_mode_err; ?></span>
-                        </div>
-
-                        <div>
-                            <label>Check in:</label> 
-                            <input type='date' name="check_in_date"value="<?php echo $check_in_date; ?>"> <br />
+                        </div><br/>
+                        <div uk-grid>
+                        <div class="uk-width-expand@m">
+                            <label class="title">Check in:</label> 
+                            <input type='date' name="check_in_date" class="uk-input" value="<?php echo $check_in_date; ?>"> 
                              <span class="help-block"><?php echo  $check_in_date_err; ?></span>
                         </div>
-                        <div>
-                            <label>Check out:</label> 
-                            <input type='date' name="check_out_date" value="<?php echo $check_out_date; ?>"><br />
-                             <span class="help-block"><?php echo  $check_out_date_err; ?></span>
+                        <div  class="uk-width-expand@m">
+                            <label class="title">Check out:</label> 
+                            <input type='date' name="check_out_date" class="uk-input" value="<?php echo $check_out_date; ?>">
+                             <span class="help-block"><?php echo  $check_out_date_err; ?></span><br/>
+                        </div>
+                        </div>
+                        <div uk-grid>
+                        <div class="uk-width-expand@m">
+                            <label class="title">Number of Adult Occupants </label> 
+                            <input type='int' name="adult_occupants" class="uk-input" value=" "> <br/>
+                             <span class="help-block"><?php echo $adult_occupants_err; ?></span><br />
+                        </div>
+                        <div class="uk-width-expand@m">
+                            <label class="title">Number of Underage occupants:</label> 
+                            <input type='int' name="minor_occupants" class="uk-input" value="0"><br />
+                        </div>
                         </div>
                         <div>
-                            <label>Number of Adult Occupants </label> 
-                            <input type='int' name="adult_occupants" value=" "> <br />
-                             <span class="help-block"><?php echo $adult_occupants_err; ?></span>
-                        </div>
-                        <div>
-                            <label>Number of Underage occupants:</label> 
-                            <input type='int' name="minor_occupants" value="0"><br />
-                        </div>
-                        <div>
-                            <label>Room To rent</label>
-                            <input type='disabled' name="room_number" value='<?php echo $selected_room_number; ?>'>
-                             <span class="help-block"><?php echo  $selected_room_number_err; ?></span>
+                            <label class="title">Room To rent</label>
+                            <input type='disabled' name="room_number" class="uk-input" value='<?php echo $selected_room_number; ?>'>
+                             <span class="help-block"><?php echo  $selected_room_number_err; ?></span><label>
                             <?php  $sql = "SELECT * FROM rooms where room_number = '$selected_room_number'";
                            if($result = mysqli_query($link, $sql)){
                             if(mysqli_num_rows($result) > 0){
                              while($row = mysqli_fetch_assoc($result)){
                                 $room_type = $row["room_type"];
                                 $room_rate = $row["room_rate"];
-                                echo $room_type;
                             }
                         }
                     }
- ?>                     
-                        </div>
-                   <input type='submit' name = 'submit' value='Submit Reservation' /> 
-                   <input type="submit" name = "reset" value = "Reset"/> 
-                   <a href="room_selection.php">Cancel</a>
+ ?>                     </label>
+                        </div id="submit">
+                        <p>By clicking on "Submit", you have read and agreed to Hotel Dabaw's terms of service. If not, read the <a href="terms_of_service.php">terms of service here</a>.</p>
+                   <input type='submit' name = 'submit' value='Submit Reservation' class="uk-button uk-button-primary uk-button-small" /> 
+                   <input type="submit" name = "reset" value = "Reset" class="uk-button uk-button-primary uk-button-small"/> 
+                   <a href="room_selection.php" class="uk-button uk-button-primary uk-button-small">Cancel</a>
 
         </form>
-    <div>
+<div></div>
+    <div id= "image_container">  
+<div id="image">
+<div class="uk-background-blend-multiply uk-background-primary">
+    <img src="<?php echo $image_link; ?>" width =750px padding = 10px  class="uk-animation-scale-up">
+    <div uk-grid>
+         <h4>Room Type: <?php echo $room_type; ?></h4>
+         <?php 
+        if (preg_match("/(ingle)+/", $room_type)) {
+            ?>
+    <h4>Rate: Php 1000/ night<br/> Includes: 1 Single Bed, 1 Bathroom, Visitor's lounge, Free access to the swimming pool </h4>
+    <?php
+         } 
+        if (preg_match("/(ouble)+/", $room_type)) {
+            ?>
+    <h4>Rate: Php 2000/ night<br/> Includes: 2 Single Beds, 1 Bathroom, Visitor's lounge, Free access to the swimming pool </h4>
+           <?php
+        }
+        if (preg_match("/(amily)+/", $room_type)) {
+            ?>
+    <h4>Rate: Php 3000/ night<br/> Includes: 5 Single Beds/3 Bunk Beds, 2 Bathrooms, Visitor's lounge, Free access to the swimming pool </h4>
+           <?php
+        }
+        ?>
+    </div>
 
-                <h3>This room is reserved on these dates:<h3> 
-                <table>
+</div>
+    <div class = "reserved_dates">
+
+                <h3>This room is reserved on these dates:</h3> 
+                <table cellpadding="10" cellspacing="2">
                             <th>Check-in-dates</th>
                             <th>Check-out-dates</th>
                 <?php 
@@ -352,9 +422,10 @@ header("location: payment.php?room_number=$selected_room_number");
                     }
                      ?>
                        </table>
-                </div>
-    </div>
+          </div>   
+          </div>   
 
-
+</div>
+</div>
 <?php  include("../includes/layouts/footer.php"); ?> 
 
