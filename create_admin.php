@@ -1,19 +1,52 @@
-<?php
-session_start();
-?>
- <?php  include("../includes/layouts/header.php");  ?>
-
-<?php 
-
-include('config.php');
-?>
+<?php session_start(); ?>
+<?php  include("../includes/config.php"); ?>
 <?php require_once("../includes/functions.php"); ?> 
-<div id="page">
-        <h2>Create Admin ID</h2>
-    </div
+<?php  include("../includes/layouts/header.php"); ?>
+<style type="text/css">
+    
+    #body { width: 100%; margin: 0 auto;} 
+#col1{
+    float: left; margin-top: -10px; width: 100%;
+}
+#col2{
+    float: left; margin: 0; width: 100%;
 
-    <?php if(empty($_SESSION["username"]) && empty($_SESSION["password"]) && empty($_SESSION["id"])){
+}
+    ul {
+        list-style-type: none;
+        width: 111%;
+        padding: ;
+        overflow: hidden;
+        background-color: #333;
+    }
 
+    li {
+        float: left;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    li a:hover {
+        background-color: #111;
+
+    }
+    #para {
+  border: 4px solid black;
+        width:454px;
+        margin-top: 180px;
+}
+</style>
+   <div id="page">
+        <h2>Manage Admins</h2>       
+    </div>
+
+<?php if(empty($_SESSION["username"]) && empty($_SESSION["username"])){
         ?>
         <h1>You are not Logged in</h1>
         <h3> Already have an account?<a href="log-in.php">Log-in Here</a> or</h3>
@@ -23,18 +56,28 @@ include('config.php');
         else {
 //Dontats------------------------------------------------------------------------------------------------------------------------------
             ?>
-    <p> You are logged in, user <b><?php echo $_SESSION["username"];?> </b> <a href="profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">[View Account Details]</a> </p>
-    <p><a href="log-out.php?sessionID=$_SESSION[id]">[Log out]</a> </p>
- <?php print_navigation(); ?><?php  ?>
+            <div dir="body"> 
+      
+    <div id="col2">
+ <?php print_navigation(); ?>
+ </div>
+ </div><?php  ?>
 <?php 
 
 
- ?>
+ ?><center>
+<div id="col1">
+        <p> You are logged in, user <b><?php echo $_SESSION["username"];?> </b> <a href="profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">[View Account Details]</a> </p>
+    <p><a href="log-out.php?sessionID=$_SESSION[id]">[Log out]</a> </p>
+    </div>
+    </center>
+<center>
 <form action = 'create_admin.php?sessionID=<?php echo urlencode($_SESSION['id']);?>' method='post'>
-    <h3>Create an admin ID? Or <br /><a href="create_admin_full.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">  Create admin through full form?</a></h3><br />
+    <div id="para">
+<h3>Create an admin ID? Or <br /><a href="create_admin_full.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">  Create admin through full form?</a></h3><br />
     <p>If you want to create an admin account, you will fill up the full form for the admin.</p>
     <p>However, if you choose to create an id, you will only create an ID for admin, and he or she will fill up the rest of the form when he/she wants.</p>
-
+</div>
 </form>
 
 
@@ -80,6 +123,7 @@ $admin_username = "emp";
     }
  }
         ?>
+  
 <h2><?php echo $message ." ". $success_id; ?> </h2>
   <form action = 'create_admin.php?sessionID=<?php echo urlencode($_SESSION['id']);?>' method='post'>
                         <div>

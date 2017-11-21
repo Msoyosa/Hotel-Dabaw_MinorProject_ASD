@@ -2,6 +2,42 @@
 <?php  include("../includes/config.php"); ?>
 <?php require_once("../includes/functions.php"); ?> 
 <?php  include("../includes/layouts/header.php"); ?>
+<style type="text/css">
+    
+    #body { width: 100%; margin: 0 auto;} 
+#col1{
+    float: left; margin: 0; width: 100%;
+}
+#col2{
+    float: left; margin: 0; width: 100%;
+
+}
+    
+    ul {
+        list-style-type: none;
+        width: 111%;
+        padding: ;
+        overflow: hidden;
+        background-color: #333;
+    }
+
+    li {
+        float: left;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    li a:hover {
+        background-color: #111;
+    }
+
+</style>
    <div id="page">
         <h2>Manage Rooms</h2>       
     </div>
@@ -16,9 +52,14 @@
         else {
 //Dontats------------------------------------------------------------------------------------------------------------------------------
             ?>
-        <p> You are logged in, user <b><?php echo $_SESSION["username"];?> </b> <a href="profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">[View Account Details]</a> </p>
-    <p><a href="log-out.php?sessionID=$_SESSION[id]">[Log out]</a> </p>
- <?php print_navigation(); ?>
+<center> 
+<div dir="body"> 
+            <div id="col1">
+ 
+    <div id="col2">        
+        <?php print_navigation(); ?>
+ </div>
+ </div>
  <?php  
 
 $old_password = $new_password =  "";
@@ -93,16 +134,21 @@ if (isset($_POST["submit"])) {
 echo $message;
 
 }
-
-
-
-
-
-
+           
  ?>
-
+    
+    <center>
+    <div div="log" style="margin-left:200px;font-size: 15px;">
+<p> You are logged in, user <b><?php echo $_SESSION["username"];?> </b> <a href="profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">[View Account Details]</a> </p>
+    </div>
+        </center>
 <div>
-    <table  cellpadding="10" cellspacing="" >
+    
+     <div>
+
+            <div class="card" style="width: 500px; margin-left:440px; margin-bottom:90px;">
+             <div class="card-body">   
+                 <table  cellpadding="10" cellspacing="" >
         <tr>
             <td>Admin ID:</td> 
             <td><?php echo $adminID;?></td>
@@ -110,26 +156,28 @@ echo $message;
         </tr>
     </table>
  <form action = 'edit_password.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>' method='post'>
-    <div>
+    <div class="form-group">
+  
     <label>Old Password:</label>
-    <input type="password" name="old_password" value="">
+    <input name="old_password"  type="password" value="<?php echo $old_password_err; ?>">
     <span class="help-block"><?php echo $old_password_err; ?></span>
 
     </div>
-    <div>
+    <div class="form-group">
     <label>New Password:</label>
-    <input type="password" name="new_password" value="">
+    <input type="password" name="new_password" value="<?php echo $new_password_err; ?>">
     <span class="help-block"><?php echo $new_password_err; ?></span>
 
     </div>
-    <div>
-  
-    <input type = "submit" name="submit" value="Update Profile"/>
-    <input type="submit" name = "reset" value = "Reset"/>   
+   
+    <input class="btn btn-primary"type = "submit" name="submit" value="Update Profile"/>
+    <input class="btn btn-primary"type="submit" name = "reset" value = "Reset"/>   
     <a href="edit_profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">Cancel</a>  
+        
 </form>
 </div>
-
+         </div>
+    </div>
 
 <?php
 }

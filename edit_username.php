@@ -2,6 +2,40 @@
 <?php  include("../includes/config.php"); ?>
 <?php require_once("../includes/functions.php"); ?> 
 <?php  include("../includes/layouts/header.php"); ?>
+<style type="text/css">
+    
+    #body { width: 100%; margin: 0 auto;} 
+#col1{
+    float: left; margin: 0; width: 75%;
+}
+#col2{
+    float: left; margin: 0; width: 25%;
+
+}
+     ul {
+        list-style-type: none;
+        width: 111%;
+        padding: ;
+        overflow: hidden;
+        background-color: #333;
+    }
+
+    li {
+        float: left;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    li a:hover {
+        background-color: #111;
+    }
+</style>
    <div id="page">
         <h2>Manage Rooms</h2>       
     </div>
@@ -16,9 +50,16 @@
         else {
 //Dontats------------------------------------------------------------------------------------------------------------------------------
             ?>
-        <p> You are logged in, user <b><?php echo $_SESSION["username"];?> </b> <a href="profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">[View Account Details]</a> </p>
-    <p><a href="log-out.php?sessionID=$_SESSION[id]">[Log out]</a> </p>
+            <div dir="body"> 
+            
  <?php print_navigation(); ?>
+                <center>
+<div div="log" style="margin-left:200px;font-size: 15px;">
+ <p> You are logged in, user <b><?php echo $_SESSION["username"];?> </b> <a href="profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">[View Account Details]</a> </p>
+    <p><a href="log-out.php?sessionID=$_SESSION[id]">[Log out]</a> </p>
+  
+    </div>
+                    </center>
  <?php  
 
 $username = "";
@@ -75,7 +116,7 @@ else{
 
  ?>
 
-<div>
+<div class="card" style="width: 500px; margin-left:440px; margin-bottom:90px;">
     <table  cellpadding="10" cellspacing="" >
         <tr>
             <td>Admin ID:</td> 
@@ -96,7 +137,7 @@ else{
     </div>
 
     
-    <input type = "submit" name="submit" value="Update Profile"/>
+    <input class="btn btn-primary"type = "submit" name="submit" value="Update Profile"/>
     <input type="submit" name = "reset" value = "Reset"/>   
     <a href="edit_profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">Cancel</a>  
 </form>

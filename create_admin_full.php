@@ -1,21 +1,49 @@
-<?php
-session_start();
-?>
-<?php  include("../includes/layouts/header.php"); 
-
- ?>
-<?php  
-include('config.php');
-?>
+<?php session_start(); ?>
+<?php  include("../includes/config.php"); ?>
 <?php require_once("../includes/functions.php"); ?> 
-<div id="page">
-        <h2>Create Admin</h2>
-    </div
+<?php  include("../includes/layouts/header.php"); ?>
+<style type="text/css">
+    
+#body { width: 100%; margin: 0 auto;} 
+#col1{
+    float: left; margin: 0; width: 100%;
+}
+#col2{
+    float: left; margin: 0; width: 100%;
 
-    <?php if(empty($_SESSION["username"]) && empty($_SESSION["password"]) && empty($_SESSION["id"])){
+}
+    ul {
+    list-style-type: none;
+    width: 111%;
+    padding: ;
+    overflow: hidden;
+    background-color: #333;
+}
 
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #111;
+}
+    
+
+    
+</style>
+ 
+
+<?php if(empty($_SESSION["username"]) && empty($_SESSION["username"])){
         ?>
-        <h1>You are not Logged in</h1>
+        <h1>You are not Logged infloat
         <h3> Already have an account?<a href="log-in.php">Log-in Here</a> or</h3>
         <h3><a href="register.php">Create an account</a> </h3>
         <?php
@@ -23,9 +51,22 @@ include('config.php');
         else {
 //Dontats------------------------------------------------------------------------------------------------------------------------------
             ?>
-     <p> You are logged in, user <b><?php echo $_SESSION["username"];?> </b> <a href="profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">[View Account Details]</a> </p>
+            
+            <div id="body"> 
+                <div id="col20"  >
+                 <?php print_navigation(); ?>
+                   </div>
+    
+ </div>
+            <center>
+             <div dir="body" style="margin-left:140px;font-size: 15px;"> 
+            <div id="col1">
+        <p> You are logged in, user <b><?php echo $_SESSION["username"];?> </b> <a href="profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">[View Account Details]</a> </p>
     <p><a href="log-out.php?sessionID=$_SESSION[id]">[Log out]</a> </p>
- <?php print_navigation(); ?>
+    
+    </div>
+                 </div>
+                 </center>
 <?php 
 $admin_id = $admin_username = $admin_password = $fname = $lname = $mname=$confirm_password= "";
 
@@ -72,6 +113,9 @@ if(isset($_POST['submit'])){
    if(empty(trim($_POST["admin_username"]))){
         $admin_username_err = "Please enter admin's username.";
     } 
+    if(strlen(trim($_POST["admin_username"])) < 8 ){
+        $admin_username_err = "Username must be more than 8 characters long.";
+    } 
     else{
         $admin_username = trim($_POST["admin_username"]);    
     }
@@ -84,6 +128,11 @@ if(isset($_POST['submit'])){
     if(empty(trim($_POST['admin_password']))){
         $admin_password_err = "Please enter admin's password.";
     }
+    if(strlen(trim($_POST['admin_password'])) <6){
+        $admin_password_err = "Password must be at least 6 characters";
+        $admin_password = "";
+        $confirm_password = "";
+    }
      else{
         if(trim($admin_password) != trim($confirm_password)){
         $admin_password_err = "Passwords do not match";
@@ -91,8 +140,25 @@ if(isset($_POST['submit'])){
         $confirm_password = "";
     }
     else{
+
         if(strlen(trim($_POST['admin_password'])) <6){
         $admin_password_err = "Password must be at least 6 characters";
+        $admin_password = "";
+        $confirm_password = "";
+    }
+        if (!preg_match("/[0-9]+/", trim($_POST["admin_password"]))) {
+        $admin_password_err = "Password must contain a number";
+        $admin_password = "";
+        $confirm_password = "";
+    }
+    
+    if (preg_match("/$fname+ /", trim($_POST["admin_password"])) || preg_match("/$fname+/", trim($_POST["admin_password"]))) {
+        $admin_password_err = "Password must not contain admin's name";
+        $admin_password = "";
+        $confirm_password = "";
+    }
+    if (preg_match("/$lname+/", trim($_POST["admin_password"])) || preg_match("/$lname+/", trim($_POST["admin_password"]))) {
+        $admin_password_err = "Password must not contain admin's name";
         $admin_password = "";
         $confirm_password = "";
     }
@@ -189,56 +255,52 @@ if(isset($_POST['submit'])){
 
  ?>
 
- <form action = 'create_admin_full.php?sessionID=<?php echo urlencode($_SESSION['id']);?>' method='post'>
-          
-
-                        <div >
-                            <label>First Name</label>
-                            <input type="text" name="fname" class="form-control" value="<?php echo $fname; ?>">
-                            <span class="help-block"><?php echo $fname_err; ?></span>
-
-                        </div>
-                        <div >
-                            <label>Last Name</label>
-                            <input type="text" name="lname" class="form-control" value="<?php echo $lname; ?>">
-                            <span class="help-block"><?php echo $lname_err; ?></span>
-
-                        </div>
-                         <div >
-                            <label>Middle Name</label>
-                            <input type="text" name="mname" class="form-control" value="<?php echo $mname; ?>">
-                            <span class="help-block"><?php echo $mname_err; ?></span>
-
-                        </div>
-                        <div>
-                            <label>Username</label>
-                             <input type='text' name="admin_username" value="<?php echo $admin_username; ?>">
-                              <span class="help-block"><?php echo $admin_username_err; ?></span>
-                        </div>
-                        <div>
-                            <label>Admin ID</label>
-                            <input type='text' name="admin_id" value="<?php echo $admin_id; ?>">
-                             <span class="help-block"><?php echo $admin_id_err
-; ?></span>
-                        </div>
-                        <div>
-                            <label>Password</label>
-                            <input type='password' name="admin_password" value="<?php echo $admin_password; ?>">
-                             <span class="help-block"><?php echo   $admin_password_err; ?></span>
-                        </div>
-
-                        <div>
-                            <label>Confirm Password</label>
-                            <input type='password' name="confirm_password" class='form-control' value="<?php echo $confirm_password; ?>">
-                             <span class="help-block"><?php echo $confirm_password_err; ?></span>
-                        </div>                 
-                       
-
-                        </div>
-                   <input type='submit' name = 'submit' value='Create Admin' /> 
-                    <input type="submit" name = "reset" value = "Reset"/>     
-                   <a href="view_admins.php?sessionID=<?php echo urlencode($_SESSION["id"]) ?>"> Cancel</a>
-        </form>
+    <div class="card" style="width: 500px; margin-left:440px; margin-bottom: 90px; ">
+        <div class="card-body"style="width:500px;">
+            <form action = 'create_admin_full.php?sessionID=<?php echo urlencode($_SESSION['id']);?>' method='post'>
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input name="fname" type="text" class="form-control" id="exampleInputEmail1"   value="<?php echo $fname; ?>" style="">
+                    <span class="help-block"><?php echo $fname_err; ?></span>
+                </div>
+                <div class="form-group">
+                    <label >Last Name</label>
+                    <input name="lname" type="text" class="form-control" id="exampleInputPassword1"  value="<?php echo $lname; ?>">
+                    <span class="help-block"><?php echo $lname_err; ?></span>
+                </div>
+                 <div class="form-group">
+                    <label >Middle Name</label>
+                    <input name="mname" type="text" class="form-control" id="exampleInputPassword1"  value="<?php echo $mname; ?>">
+                     <span class="help-block"><?php echo $mname_err; ?></span>
+                </div>
+                 <div class="form-group">
+                    <label >Username</label>
+                    <input name="admin_username" type="text" class="form-control" id="exampleInputPassword1"  value="<?php echo $admin_username; ?>">
+                     <span class="help-block"><?php echo $admin_username_err; ?></span>
+                </div>
+                <div class="form-group">
+                    <label >Admin ID</label>
+                    <input name="admin_id" type="text" class="form-control" id="exampleInputPassword1" value="<?php echo $admin_id; ?>">
+                     <span class="help-block"><?php echo $admin_id_err; ?></span>
+                </div>
+                 <div class="form-group">
+                    <label >Password</label>
+                    <input name="admin_password" type="password" class="form-control" id="exampleInputPassword1" value="<?php echo $confirm_password; ?>">
+                     <span class="help-block"><?php echo   $admin_password_err; ?></span>
+                </div>
+                 <div class="form-group">
+                    <label >Confirm Password</label>
+                    <input name="confirm_password" type="password" class="form-control" id="exampleInputPassword1" value="<?php echo $confirm_password; ?>">
+                    <span class="help-block"><?php echo $confirm_password_err; ?></span>
+                </div>
+               
+                <input class="btn btn-primary" type='submit' name = 'submit' value='Create Admin' /> 
+                <input class="btn btn-primary" type="submit" name = "reset" value = "Reset"/>     
+                <a href="view_admins.php?sessionID=<?php echo urlencode($_SESSION["id"]) ?>"> Cancel</a>
+            </form>
+        </div>
+    </div>
+ 
 <?php
 //Dontats------------------------------------------------------------------------------------------------------------------------------
             }

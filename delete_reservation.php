@@ -5,6 +5,31 @@ session_start();
 <?php  include("../includes/layouts/header.php"); 
 include('config.php');
 ?>
+<style type="text/css">
+ul {
+        list-style-type: none;
+        width: 111%;
+        padding: ;
+        overflow: hidden;
+        background-color: #333;
+    }
+
+    li {
+        float: left;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    li a:hover {
+        background-color: #111;
+    }
+</style>
 <?php require_once("../includes/functions.php"); ?> 
 <div id="page">
 		<h2>Delete Reservation</h2>
@@ -38,9 +63,13 @@ include('config.php');
  }
  if (empty($confirm)) {
   	?>
-    <p> You are logged in, user <b><?php echo $_SESSION["username"];?> </b> <a href="profile.php?sessionID=<?php echo urlencode($_SESSION["id"]) ?>">[View Account Details]</a> </p>
-    <p><a href="log-out.php?sessionID=<?php echo urlencode($_SESSION["id"]) ?>">[Log out]</a> </p>
+   
   <?php   print_navigation(); ?>
+<center>
+ <p> You are logged in, user <b><?php echo $_SESSION["username"];?> </b> <a href="profile.php?sessionID=<?php echo urlencode($_SESSION["id"]) ?>">[View Account Details]</a> </p>
+    <p><a href="log-out.php?sessionID=<?php echo urlencode($_SESSION["id"]) ?>">[Log out]</a> </p>
+</center>
+<center>
  	<h3>You sure want to delete this reservation?</h3>
 
 	<form action = "delete_reservation.php?client_number=<?php echo urlencode($_GET["client_number"]); ?>" method="post">
@@ -49,7 +78,7 @@ include('config.php');
 		</div>
 	</form>
 		<a href="manage_reservations.php?sessionID=<?php echo urlencode($_SESSION["id"]) ?>"><button>Cancel</button></a>   
-
+</center>
   	<?php
   }
   else{
