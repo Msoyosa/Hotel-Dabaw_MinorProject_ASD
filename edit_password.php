@@ -39,7 +39,7 @@
 
 </style>
    <div id="page">
-        <h2>Manage Rooms</h2>       
+        <h2>Edit Password</h2>       
     </div>
 
 <?php if(empty($_SESSION["username"]) && empty($_SESSION["username"])){
@@ -138,16 +138,18 @@ echo $message;
  ?>
     
     <center>
-    <div div="log" style="margin-left:200px;font-size: 15px;">
 <p> You are logged in, user <b><?php echo $_SESSION["username"];?> </b> <a href="profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">[View Account Details]</a> </p>
+                 <p><a href="log-out.php?sessionID=$_SESSION[id]">[Log out]</a> </p>
+  
     </div>
         </center>
 <div>
     
      <div>
 
-            <div class="card" style="width: 500px; margin-left:440px; margin-bottom:90px;">
+<div class="card" style="width: 500px; margin-left:400px; margin-bottom:90px;">
              <div class="card-body">   
+             <center>
                  <table  cellpadding="10" cellspacing="" >
         <tr>
             <td>Admin ID:</td> 
@@ -155,6 +157,7 @@ echo $message;
             <td></td>
         </tr>
     </table>
+
  <form action = 'edit_password.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>' method='post'>
     <div class="form-group">
   
@@ -175,6 +178,7 @@ echo $message;
     <a href="edit_profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">Cancel</a>  
         
 </form>
+</center>
 </div>
          </div>
     </div>

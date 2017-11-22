@@ -2,55 +2,53 @@
 <?php
 session_start();
 ?>
+
 <?php 
 ?>
 <?php  include("../includes/config.php"); ?>
 
-<html>
+<?php  include("../includes/layouts/header.php"); ?>
+   <link rel="stylesheet" href="css/uikit-rtl.min.css" type="text/css" media="all">
+   <link rel="stylesheet" href="css/uikit-rtl.css" type="text/css" media="all">
+   <link rel="stylesheet" href="css/uikit.min.css" type="text/css" media="all">
+   <link rel="stylesheet" href="css/uikit.css" type="text/css" media="all">
 
-<head>
-    <title>Hotel Dabaw</title>
-    <link rel="stylesheet" href="css/uikit.min.css">
-    <script src="js/uikit.min.js"></script>
-    <style type="text/css">
-        body {
-            width: 90%;
-            margin: 0 auto;
-            background-color: ;
-            color: black;
-        }
 
-        #header {
-            width: 100%;
-            text-align: center;
+  <script type="text/javascript" src="js/uikit.js"></script>
+  <script type="text/javascript" src="js/uikit.min.js"></script>
+  <script type="text/javascript" src="js/uikit-icons.js"></script>
+  <script type="text/javascript" src="js/uikit-icons.min.js"></script>
+<style type="text/css">
+     #body { width: 100%; margin: 0 auto;} 
+#col1, #col2{
+    float: right; margin: 0; width: 100%;
+}ul {
+        list-style-type: none;
+        width: 111%;
+        padding: ;
+        overflow: hidden;
+        background-color: #333;
+    }
 
-        }
+    li {
+        float: left;
+    }
 
-        #contento {
-            width: 100%;
-            margin: 0 auto;
-            vertical-align: center;
-        }
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
 
-        #page {
-            background-color: antiquewhite;
-            width: 400px;
-
-        }
-
-    </style>
-
-</head>
-
-<body>
-
-    <div id="header">
-
-        <div id="index">
-            <a href="../public/index.php" target="_blank">
-                <h2>Visit as a Customer</h2>
-            </a>
-        </div>
+    li a:hover {
+        background-color: #111;
+    }
+aside{
+    text-align: center;
+}
+</style>
         <?php require_once("../includes/functions.php"); ?>
     </div>
     <center>
@@ -84,27 +82,54 @@ session_start();
 
                 </div>
 
+
+<div class="uk-flex-center" uk-grid>
+<div class="uk-animation-toggle">
+    <div class="uk-flex-first"> 
+            <img class="uk-animation-fade uk-transform-origin-bottom-right" width=200px height = 150px src="Images/slideshow_images/1.jpg">
+   </div>
+   </div>
+   <div class="uk-animation-toggle">
+       <div class="uk-flex-second"> 
+        <img class="uk-animation-fade uk-transform-origin-top-center" width=200px height = 150px src="Images/slideshow_images/2.jpg">
+        </div>
+        </div>
+<div class="uk-animation-toggle">
+    <div class="uk-flex-third"> 
+        <img class="uk-animation-fade uk-transform-origin-bottom-center" width=200px height = 150px src="Images/slideshow_images/3.jpg">
+        </div>
+        </div>
+<div class="uk-animation-toggle">
+    <div class="uk-flex-fourth"> 
+        <img class="uk-animation-fade uk-transform-origin-top-center" width=200px height = 150px src="Images/slideshow_images/4.jpg">
+        </div>
+        </div>
+<div class="uk-animation-toggle">
+    <div class="uk-flex-fifth"> 
+        <img class="uk-animation-fade uk-transform-origin-bottom-right" width=200px height = 150px src="Images/slideshow_images/5.jpg">
+        </div>
+        </div>
+ 
+</div>
+ <aside>
+            <h2>Nice people taking care of nice people.</h2>
+        Welcome to your residence.
+          
+          
+            <p>Change your view.</p>
+      <p>Stay you.</p>
+      <p>Relax, it's Hotel Dabaw.</p>
+      <p>Stay with someone you know.</p>
+      <p>The best surprise is no surprise.</p> 
+          
+          </aside>    
         </div>
     </center>
     <?php
 //Dontats------------------------------------------------------------------------------------------------------------------------------
 			}
-          /*  <!-- footer -->
-    <footer>
-        <div class="container">
-            <div class="wrapper">
-                <div class="fleft">Copyright - All Right Reserved to Hotel Dabaw 2017</div>
-                <div class="fright"></div>
-            </div>
-        </div>
-    </footer>
-    <script type="text/javascript">
-        Cufon.now();
-
-    </script>*/
+         
 ?>
 
-    
-</body>
+<?php  include("../includes/layouts/footer.php"); ?>
 
-</html>

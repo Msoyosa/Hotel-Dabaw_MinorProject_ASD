@@ -43,7 +43,7 @@
     }
 </style>
    <div id="page">
-        <h2>Manage Rooms</h2>       
+        <h2>About Hotel Dabaw</h2>       
     </div>
 
 <?php if(empty($_SESSION["username"]) && empty($_SESSION["username"])){
@@ -67,6 +67,7 @@
 
             </div>
         </center>
+        </div>
 <div id="para">
 <p id="paragraph1">
 	Hotel Dabaw offers 18 guestrooms for discerning for travellers searching for the best and affordable hotels in Davao City, Southerns Mindanao Island's hud for commerce, tourisn, and industry. Located at Magallanes Street, the hotel is in the downtown area.

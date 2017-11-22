@@ -39,11 +39,13 @@ li a:hover {
 
     
 </style>
- 
+   <div id="page">
+        <h2>Create Admin</h2>       
+    </div>
 
 <?php if(empty($_SESSION["username"]) && empty($_SESSION["username"])){
         ?>
-        <h1>You are not Logged infloat
+        <h1>You are not Logged in</h1>
         <h3> Already have an account?<a href="log-in.php">Log-in Here</a> or</h3>
         <h3><a href="register.php">Create an account</a> </h3>
         <?php
@@ -51,22 +53,18 @@ li a:hover {
         else {
 //Dontats------------------------------------------------------------------------------------------------------------------------------
             ?>
+ <div dir="body"> 
             
-            <div id="body"> 
-                <div id="col20"  >
-                 <?php print_navigation(); ?>
-                   </div>
-    
- </div>
-            <center>
-             <div dir="body" style="margin-left:140px;font-size: 15px;"> 
-            <div id="col1">
-        <p> You are logged in, user <b><?php echo $_SESSION["username"];?> </b> <a href="profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">[View Account Details]</a> </p>
-    <p><a href="log-out.php?sessionID=$_SESSION[id]">[Log out]</a> </p>
-    
-    </div>
-                 </div>
-                 </center>
+   
+ <?php print_navigation(); ?>
+         <center>
+            <div div="log" style="margin-left:40px;font-size: 15px;">
+                <p> You are logged in, user <b><?php echo $_SESSION["username"];?> </b> <a href="profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">[View Account Details]</a> </p>
+                <p><a href="log-out.php?sessionID=$_SESSION[id]">[Log out]</a> </p>
+
+            </div>
+        </center>
+        </div>
 <?php 
 $admin_id = $admin_username = $admin_password = $fname = $lname = $mname=$confirm_password= "";
 

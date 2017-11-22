@@ -54,12 +54,18 @@
         else {
 //Dontats------------------------------------------------------------------------------------------------------------------------------
             ?>
-            <div dir="body"> 
-            <div id="col1">
-    
-    </div>
+ <div dir="body"> 
+            
    
  <?php print_navigation(); ?>
+         <center>
+            <div div="log" style="margin-left:40px;font-size: 15px;">
+                <p> You are logged in, user <b><?php echo $_SESSION["username"];?> </b> <a href="profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">[View Account Details]</a> </p>
+                <p><a href="log-out.php?sessionID=$_SESSION[id]">[Log out]</a> </p>
+
+            </div>
+        </center>
+        </div>
  <div id="tabs">
 <ul>
 <ul>
@@ -70,7 +76,7 @@
 </ul>
 </div>
 
- </div>
+
 
 <?php  
 
@@ -92,7 +98,7 @@ else{
 <div>
     <div id="form">
 <form action ="manage_reservations.php<?php echo "?sessionID=$_SESSION[id]" ?>" method = "post">
-        <label>Search Client's Name, Number, or room_number</label>
+        <label>Search Client's Name, Number, or Room Number</label>
         <input type="text" name="toSearch" value=""> 
         <input type="submit" name = "submit" value="Submit">
     </form >

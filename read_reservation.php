@@ -166,11 +166,13 @@ if(isset($_GET["client_number"])){
        } ?>
        
     </table>
-
+  
 </div>
 <div>
+  <center>
                 <a href="update_reservation.php?client_number=<?php echo urlencode($client_number);?>"><img src="Images/Buttons/update.ico"></a>
                 <a href="delete_reservation.php?client_number=<?php echo urlencode($client_number);?>" ><img src="Images/Buttons/delete.ico"></a>
+                </center>
 </div>
 <?php
 //Dontats------------------------------------------------------------------------------------------------------------------------------

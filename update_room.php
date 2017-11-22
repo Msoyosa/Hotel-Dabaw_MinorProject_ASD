@@ -2,6 +2,7 @@
 <?php  include("../includes/config.php"); ?>
 <?php require_once("../includes/functions.php"); ?> 
 <?php  include("../includes/layouts/header.php"); ?>
+<?php include("try.php"); ?>
 <style type="text/css">
     
     #body { width: 100%; margin: 0 auto;} 
@@ -130,17 +131,15 @@ if(isset($_POST["submit"])){
 
 
   if(empty($room_rate_err)  && empty($room_type_err)){
-    if (isset($_FILES["image"])) {
+    if ($_FILES["image"]["name"] != "") {
       $image_info = $_FILES["image"] ;
-            if (!empty($_FILES["name"])) {
                
-            
       $image_info['name'] = $selected_room_number.".jpg";
       //print_r($image_info);
       if($image_info['error'] > 0){
         die('An error ocurred when uploading.');
       }
-      if($image_info["type"] != "image/jpeg"){
+      if(!preg_match("/[image]+/", $_FILES["image"]["type"])){
         die('Unsupported filetype uploaded.');
       }
 
@@ -149,22 +148,46 @@ if(isset($_POST["submit"])){
 switch ($room_type) {
     case 'Single Bedroom':
        if(!move_uploaded_file($image_info['tmp_name'], 'C:/wamp/www/hotel_dabaw/public/Images/Hotel Rooms/single bedroom/' . $image_info['name'])){
-    die('Error uploading file - check destination is writeable.');
+    die('Error uploading file - check destination if writeable.');
+}
+else{
+  $dir = "Images/Hotel Rooms/single bedroom/".$image_info['name'];
+?>
+  <img src="<?php echo $dir; ?>"/>
+
+  <?php
+   header("location: manage_rooms.php");
 }
         break;
     
    case 'Double Bedroom':
        if(!move_uploaded_file($image_info['tmp_name'], 'C:/wamp/www/hotel_dabaw/public/Images/Hotel Rooms/double bedroom/' . $image_info['name'])){
-    die('Error uploading file - check destination is writeable.');
+    die('Error uploading file - check destination if writeable.');
+}
+else{
+  $dir = "Images/Hotel Rooms/double bedroom/".$image_info['name'];
+?>
+  <img src="<?php echo $dir; ?>"/>
+
+  <?php
+   header("location: manage_rooms.php?sessionID=".$_SESSION["id"]);
 }
         break;
     case 'Family Bedroom':
        if(!move_uploaded_file($image_info['tmp_name'], 'C:/wamp/www/hotel_dabaw/public/Images/Hotel Rooms/family bedroom/' . $image_info['name'])){
-    die('Error uploading file - check destination is writeable.');
+    die('Error uploading file - check destination if writeable.');
+}
+else{
+    $dir = "Images/Hotel Rooms/family bedroom/".$image_info['name'];
+?>
+  <img src="<?php echo $dir; ?>"/>
+
+  <?php
+   header("location: manage_rooms.php?sessionID=".$_SESSION["id"]);
 }
         break;
 }
-}
+
 }  $sql = "SELECT * FROM rooms where room_number = '$selected_room_number'";
                            if($result = mysqli_query($link, $sql)){
                             if(mysqli_num_rows($result) > 0){
@@ -175,7 +198,7 @@ switch ($room_type) {
                         }
                     }
 		}
-		if ($old_room_type == $_POST["room_type"] && $old_room_rate == $_POST["room_rate"]) {
+		if ($old_room_type == $_POST["room_type"] && $old_room_rate == $_POST["room_rate"] && $_FILES["image"]["name"] == "") {
 			   	$message = "No changes made to room number" .": ".$room_number;
 
 		}
@@ -200,7 +223,7 @@ switch ($room_type) {
                         }
 
                     }
-   			$message = "Successfully updated room number" .": ".$room_number. "The changes in the photo will only apply when you close the browser";
+   			$message = "Successfully updated room number" .": ".$room_number. ".";
    	                  //  mysql_close($link);
 
 		}
@@ -243,7 +266,7 @@ if (empty($message)) {
         	<label>Upload New Image:</label>
         <p> 
             <label for="file">File to upload:</label> 
-            <input id="file" type="file" name="image"> 
+            <input id="file"  type="file" name="image"> 
         </p> 
                  
         <?php /*<div>
@@ -256,8 +279,8 @@ if (empty($message)) {
              <span class="help-block"><?php echo $room_rate_err; ?></span>
         </div>
         <div>
-        	 <input type="submit" name = "submit" value="Update this room" /> 
-        	 <input type="submit" name = "reset" value = "Reset"/> 
+        	 <input type="submit" class="btn btn-primary" name = "submit" value="Update this room" /> 
+        	 <input type="submit" class="btn btn-primary" name = "reset" value = "Reset"/> 
         	 <a href="manage_rooms.php?sessionID=<?php echo urlencode($_SESSION["id"]) ?>" class="btn btn-default">Cancel</a>
 
         </div>

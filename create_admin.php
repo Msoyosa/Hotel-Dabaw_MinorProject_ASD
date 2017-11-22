@@ -43,7 +43,7 @@
 }
 </style>
    <div id="page">
-        <h2>Manage Admins</h2>       
+        <h2>Create Admin ID</h2>       
     </div>
 
 <?php if(empty($_SESSION["username"]) && empty($_SESSION["username"])){
@@ -128,10 +128,10 @@ $admin_username = "emp";
   <form action = 'create_admin.php?sessionID=<?php echo urlencode($_SESSION['id']);?>' method='post'>
                         <div>
                             <label>Please Type in Admin ID</label>
-                            <input type='text' name="admin_id" value="<?php echo $admin_id; ?>">
+                            <input type='text'  name="admin_id" value="<?php echo $admin_id; ?>">
                              <span class="help-block"><?php echo   $admin_id_err; ?></span>
                         </div>
-                   <input type='submit' name = 'submit' value='Create ID' />             
+                   <input type='submit' class="btn btn-primary" name = 'submit' value='Create ID' />             
         </form>
 
  

@@ -40,7 +40,7 @@
     }
 </style>
    <div id="page">
-        <h2>Manage Rooms</h2>       
+        <h2>Manage Reservations per Room</h2>       
     </div>
 
 <?php if(empty($_SESSION["username"]) && empty($_SESSION["username"])){
@@ -53,9 +53,20 @@
         else {
 //Dontats------------------------------------------------------------------------------------------------------------------------------
             ?>
-            <div dir="body"> 
+      <div dir="body"> 
+            
+   
+ <?php print_navigation(); ?>
+         <center>
+            <div div="log" style="margin-left:40px;font-size: 15px;">
+                <p> You are logged in, user <b><?php echo $_SESSION["username"];?> </b> <a href="profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">[View Account Details]</a> </p>
+                <p><a href="log-out.php?sessionID=$_SESSION[id]">[Log out]</a> </p>
+
+            </div>
+        </center>
+        </div>
   
- <?php print_navigation();
+ <?php 
  $toSearch = "";
     $room_number = ""; ?>
  <div id="tabs">
@@ -66,7 +77,7 @@
 </ul>
 </ul>
 </div>
- </div>
+
  
 <?php  
 
@@ -85,7 +96,7 @@
 
 <div id="form">
 <form action ="view_room_reservations.php?sessionID=<?php echo urlencode($_SESSION["id"]) ?>" method = "post">
-        <label>Search Client's Name, Number, or room_number</label>
+        <label>Search Client's Name, Number, or Room Number</label>
         <input type="text" name="toSearch" value=""> 
         <input type="submit" name = "submit" value="Submit">
     </form >

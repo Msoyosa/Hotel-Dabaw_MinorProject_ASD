@@ -64,15 +64,14 @@
 
             </div>
         </center>
-
+  <center> 
  <form action ="view_admins.php<?php echo "?sessionID=$_SESSION[id]" ?>" method = "post">
-     
-     <label>Search Room Number or Type</label>
+     <label>Search ID Number or Name</label>
         <input type="text" name="toSearch" value=""> 
         <input type="submit" name = "submit" value="Submit">
 
          </form >
-
+</center>  
 <?php  
  $message ="";
 echo $message;

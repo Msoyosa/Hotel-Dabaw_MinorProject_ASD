@@ -3,15 +3,33 @@
 <?php require_once("../includes/functions.php"); ?> 
 <?php  include("../includes/layouts/header.php"); ?>
 <style type="text/css">
-    
-    #body { width: 100%; margin: 0 auto;} 
-#col1{
-    float: left; margin: 0; width: 75%;
-}
-#col2{
-    float: left; margin: 0; width: 25%;
+     #body { width: 100%; margin: 0 auto;} 
+#col1, #col2{
+    float: right; margin: 0; width: 100%;
+}ul {
+        list-style-type: none;
+        width: 111%;
+        padding: ;
+        overflow: hidden;
+        background-color: #333;
+    }
 
-}
+    li {
+        float: left;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    li a:hover {
+        background-color: #111;
+    }
+
 </style>
    <div id="page">
         <h2>Manage Admins</h2>       
@@ -27,16 +45,18 @@
         else {
 //Dontats------------------------------------------------------------------------------------------------------------------------------
             ?>
-            <div dir="body"> 
-            <div id="col1">
-        <p> You are logged in, user <b><?php echo $_SESSION["username"];?> </b> <a href="profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">[View Account Details]</a> </p>
-    <p><a href="log-out.php?sessionID=$_SESSION[id]">[Log out]</a> </p>
-    <hr/>
-    </div>
-    <div id="col2">
+      <div dir="body"> 
+            
+   
  <?php print_navigation(); ?>
- </div>
- </div>
+         <center>
+            <div div="log" style="margin-left:40px;font-size: 15px;">
+                <p> You are logged in, user <b><?php echo $_SESSION["username"];?> </b> <a href="profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">[View Account Details]</a> </p>
+                <p><a href="log-out.php?sessionID=$_SESSION[id]">[Log out]</a> </p>
+
+            </div>
+        </center>
+        </div>
    <hr/>
  <?php
   $message = "";
@@ -230,9 +250,9 @@ if(empty(trim($_POST["admin_username"]))){
 
  if (empty($message)) {
     ?>
-    <p> You are logged in, user <b><?php echo $_SESSION["username"];?> </b> <a href="profile.php?sessionID=<?php echo urlencode($_SESSION["id"]) ?>">[View Account Details]</a> </p>
-    <p><a href="log-out.php?sessionID=<?php echo urlencode($_SESSION["id"]) ?>">[Log out]</a> </p>
 
+    <div class="card" style="width: 20rem; margin-left: 500px;">
+        <div class="card-body">
     <form action = 'update_admin.php?adminID=<?php echo urlencode("$adminID"); ?>' method='post'>
                         <div>
                             <label>Admin ID :<?php echo $adminID; ?> </label>
@@ -259,12 +279,12 @@ if(empty(trim($_POST["admin_username"]))){
                         </div>
                         <div>
                             <label>Username</label>
-                             <input type='text' name="admin_username" value="<?php echo $admin_username; ?>">
+                             <input type='text' name="admin_username" class="form-control"  value="<?php echo $admin_username; ?>">
                               <span class="help-block"><?php echo $admin_username_err; ?></span>
                         </div>
                         <div>
                             <label>New Password (LEAVE BLANK if not to be changed)<br /></label>
-                            <input type='password' name="admin_password" value="<?php echo $admin_password; ?>">
+                            <input type='password' name="admin_password" class="form-control"  value="<?php echo $admin_password; ?>">
                              <span class="help-block"><?php echo   $admin_password_err; ?></span>
                         </div>
 
@@ -276,10 +296,12 @@ if(empty(trim($_POST["admin_username"]))){
                        
 
                         </div>
-                   <input type='submit' name = 'submit' value='Create Admin' /> 
+                   <input type='submit' class="btn btn-primary" name = 'submit' value='Update Admin' /> 
                   <a href="view_admins.php?sessionID=<?php echo urlencode($_SESSION["id"]) ?>" class="btn btn-default">Cancel</a>
 
         </form>
+        </div>
+        </div>
     <?php
   }
   else{

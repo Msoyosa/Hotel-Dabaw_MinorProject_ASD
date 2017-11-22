@@ -46,7 +46,7 @@
 
 </style>
 <div id="page">
-    <h2>Manage Rooms</h2>
+    <h2>Edit Name</h2>
 </div>
 
 <?php if(empty($_SESSION["username"]) && empty($_SESSION["username"])){
@@ -106,29 +106,6 @@ $fname   =$lname  =$mname =  $adminID = "";
 $fname_err   =$lname_err  =$mname_err =  "";
      $message = "No changes made to admin ".$_SESSION["username"]. " the account for ". $lname .", ". $fname. ".<br/>Go back to <a href = 'edit_profile.php?sessionID=<?php echo urlencode($_SESSION[id]) ?>'> Editing Profile</a>"; } if (empty(trim($_POST["fname"]))) { $fname_err = "Please Enter First Name"; } else{ $fname = trim($_POST["fname"]); } if (empty(trim($_POST["lname"]))) { $lname_err = "Please Enter Last Name"; } else{ $lname = trim($_POST["lname"]); } if (empty(trim($_POST["mname"]))) { $mname_err = "Please Enter Middle Name"; } else{ $mname = trim($_POST["mname"]); } if(empty($fname_err) && empty($lname_err) && empty($mname_err)) { $fname = $_POST['fname']; $lname = $_POST['lname']; $mname = $_POST['mname']; $sql = "UPDATE admins SET fname = '$fname', lname = '$lname', mname = '$mname' WHERE id = '$adminID'"; $result = mysqli_query($link, $sql); $checking = admin_confirm_query($result); if($checking ==1){ $message = "Successfully updated admin ".$_SESSION["username"]. " the account for ". $lname .", ". $fname. ".<br/>Go back to <a href='edit_profile.php?sessionID=<?php echo urlencode($_SESSION[id]) ?>'> Editing Profile</a>"; $_SESSION["fname"]= $fname; $_SESSION["lname"]= $lname; $fname =$lname =$mname = $adminID = ""; $fname_err =$lname_err =$mname_err = ""; } } echo $message; /*
 
-        <form action='edit_name.php?sessionID=<?php echo urlencode($_SESSION[' id ']) ?>' method='post'>
-
-            <div>
-                <label> First Name:</label>
-                <input type="text" name="fname" value="<?php echo $fname; ?>">
-                <span class="help-block"><?php echo $fname_err; ?></span>
-            </div>
-            <div>
-                <label> Last Name:</label>
-                <input type="text" name="lname" value="<?php echo $lname; ?>">
-                <span class="help-block"><?php echo $lname_err; ?></span>
-            </div>
-            <div>
-                <label> Middle Name:</label>
-                <input type="text" name="mname" value="<?php echo $mname; ?>">
-                <span class="help-block"><?php echo $mname_err; ?></span>
-            </div>
-
-
-            <input type="submit" name="submit" value="Update Profile" />
-            <input type="submit" name="reset" value="Reset" />
-            <a href="edit_profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">Cancel</a>
-        </form>
         */ } else{ ?>
         <center>
             <div div="log" style="margin-left:200px;font-size: 15px;">
@@ -143,6 +120,7 @@ $fname_err   =$lname_err  =$mname_err =  "";
 
             <div class="card" style="width: 500px; margin-left:440px; margin-bottom:90px;">
                 <div class="card-body">
+                <center>
                     <table cellpadding="10" cellspacing="">
                         <td>Admin ID:</td>
                         <td>
@@ -172,6 +150,7 @@ $fname_err   =$lname_err  =$mname_err =  "";
                         <input class="btn btn-primary" type="submit" name="reset" value="Reset" />
                         <a href="edit_profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">Cancel</a>
                     </form>
+                    </center>
                 </div>
             </div>
         </div>

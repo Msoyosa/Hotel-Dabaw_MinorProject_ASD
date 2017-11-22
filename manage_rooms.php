@@ -67,6 +67,7 @@
         </center>    
  </div>
  </div>
+ </div>
  <div id="form">               
  <form action ="manage_rooms.php<?php echo "?sessionID=$_SESSION[id]" ?>" method = "post">
 

@@ -37,7 +37,7 @@
     }
 </style>
    <div id="page">
-        <h2>Manage Rooms</h2>       
+        <h2>Edit Username</h2>       
     </div>
 
 <?php if(empty($_SESSION["username"]) && empty($_SESSION["username"])){
@@ -117,6 +117,7 @@ else{
  ?>
 
 <div class="card" style="width: 500px; margin-left:440px; margin-bottom:90px;">
+<center>
     <table  cellpadding="10" cellspacing="" >
         <tr>
             <td>Admin ID:</td> 
@@ -137,10 +138,11 @@ else{
     </div>
 
     
-    <input class="btn btn-primary"type = "submit" name="submit" value="Update Profile"/>
-    <input type="submit" name = "reset" value = "Reset"/>   
-    <a href="edit_profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">Cancel</a>  
+                        <input class="btn btn-primary" type="submit" name="submit" value="Update Profile" />
+                        <input class="btn btn-primary" type="submit" name="reset" value="Reset" />
+                        <a href="edit_profile.php?sessionID=<?php echo urlencode($_SESSION['id']) ?>">Cancel</a>
 </form>
+</center>
 </div>
 
 
